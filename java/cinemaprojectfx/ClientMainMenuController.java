@@ -26,8 +26,13 @@ public class ClientMainMenuController implements Initializable {
     }
 
     @FXML
-    public void onRegisterClientButtonClick(ActionEvent event) {
+    public void onRegisterClientButtonClick(ActionEvent event) throws IOException {
+        Parent loader = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/client/RegisterClient.fxml"));
+        Scene scene = new Scene(loader);
 
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
