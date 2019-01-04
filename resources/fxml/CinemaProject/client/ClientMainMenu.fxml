@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cinemaprojectfx.ClientMainMenuController">
+   <children>
+      <Label layoutX="44.0" layoutY="26.0" text="Menu klienta" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="26.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="79.0" mnemonicParsing="false" onAction="#onLoginClientButtonClick" text="Zaloguj się" textAlignment="CENTER" />
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="125.0" mnemonicParsing="false" onAction="#onRegisterClientButtonClick" text="Zarejestruj się" textAlignment="CENTER" />
+      <Button layoutX="30.0" layoutY="169.0" mnemonicParsing="false" onAction="#onBuyTicketWithoutAccountButtonClick" text="Kup bilet bez rejestracji" textAlignment="CENTER" />
+      <Button layoutX="74.0" layoutY="217.0" mnemonicParsing="false" onAction="#onBackButtonClick" text="Wstecz" textAlignment="CENTER" />
+   </children>
+</AnchorPane>
