@@ -19,20 +19,20 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="35.0" layoutY="118.0" prefHeight="25.0" prefWidth="161.0" />
+      <TextField fx:id="usernameRegisterTextField" layoutX="35.0" layoutY="118.0" prefHeight="25.0" prefWidth="161.0" />
       <Label layoutX="35.0" layoutY="155.0" text="Hasło:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="243.0" layoutY="327.0" mnemonicParsing="false" onAction="#registerClient" prefHeight="25.0" prefWidth="100.0" text="Zarejestruj" />
+      <Button fx:id="registerButton" layoutX="243.0" layoutY="327.0" mnemonicParsing="false" onAction="#onRegisterButtonClick" prefHeight="25.0" prefWidth="100.0" text="Zarejestruj" />
       <Button layoutX="35.0" layoutY="327.0" mnemonicParsing="false" onAction="#backMenu" prefHeight="25.0" prefWidth="100.0" text="Wstecz" />
       <Label layoutX="36.0" layoutY="213.0" text="Adres email:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="36.0" layoutY="233.0" prefHeight="25.0" prefWidth="161.0" />
-      <PasswordField layoutX="38.0" layoutY="175.0" prefHeight="25.0" prefWidth="161.0" />
+      <TextField fx:id="emailRegisterField" layoutX="36.0" layoutY="233.0" prefHeight="25.0" prefWidth="161.0" />
+      <PasswordField fx:id="passwordRegisterField" layoutX="38.0" layoutY="175.0" prefHeight="25.0" prefWidth="161.0" />
    </children>
 </AnchorPane>
