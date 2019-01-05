@@ -19,12 +19,7 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onClientButtonClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/client/ClientMainMenu.fxml"));
-        Scene scene = new Scene(root);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // kazdy element layoutu dziedziczy po Node
-        stage.setScene(scene);
-        stage.show();
+        backToClientMainMenu(event);
     }
 
     @FXML
@@ -41,5 +36,15 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    @FXML
+    static public void backToClientMainMenu (ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(MainMenuController.class.getResource("/fxml/CinemaProject/client/ClientMainMenu.fxml"));
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // kazdy element layoutu dziedziczy po Node
+        stage.setScene(scene);
+        stage.show();
     }
 }

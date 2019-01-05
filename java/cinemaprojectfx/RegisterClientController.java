@@ -50,7 +50,7 @@ public class RegisterClientController implements Initializable {
 
     public void onRegisterButtonClick(ActionEvent actionEvent) throws IOException {
 
-        Alert loginAlert = new Alert(Alert.AlertType.INFORMATION);
+        Alert loginAlert = new Alert(Alert.AlertType.NONE);
 
         if (database.registerNewClient(
                 usernameRegisterTextField.getText(),
