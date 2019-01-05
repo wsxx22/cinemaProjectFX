@@ -1,7 +1,6 @@
 package cinemaprojectfx;
 
 import cinemaprojectfx.hibernate.Database;
-import cinemaprojectfx.hibernate.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,9 +22,9 @@ public class RegisterClientController implements Initializable {
 
     private Database database;
 
-    @FXML TextField usernameRegisterTextField;
-    @FXML PasswordField passwordRegisterField;
-    @FXML TextField emailRegisterField;
+    @FXML TextField usernameTextField;
+    @FXML PasswordField passwordField;
+    @FXML TextField emailTextField;
     @FXML Button registerButton;
 
     @Override
@@ -34,39 +33,37 @@ public class RegisterClientController implements Initializable {
 
         registerButton.setDisable(true);
 
-        registerButtonDisable(usernameRegisterTextField);
-        registerButtonDisable(emailRegisterField);
-        registerButtonDisable(passwordRegisterField);
+        registerButtonDisable(usernameTextField);
+        registerButtonDisable(emailTextField);
+        registerButtonDisable(passwordField);
 
     }
 
     private void registerButtonDisable (TextField actualTextField) {
-
         actualTextField.textProperty().addListener(((observable, oldValue, newValue) ->
-                registerButton.setDisable(usernameRegisterTextField.getText().isEmpty()
-                        | passwordRegisterField.getText().isEmpty()
-                        | emailRegisterField.getText().isEmpty())));
+                registerButton.setDisable(usernameTextField.getText().isEmpty()
+                        || passwordField.getText().isEmpty()
+                        || emailTextField.getText().isEmpty())));
     }
 
     public void onRegisterButtonClick(ActionEvent actionEvent) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.NONE);
 
-        Alert loginAlert = new Alert(Alert.AlertType.NONE);
+        if (database.register(usernameTextField.getText(), passwordField.getText(), emailTextField.getText())) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setTitle("Konto utworzone");
+            alert.setContentText("Teraz możesz się zalogować");
 
-        if (database.registerNewClient(
-                usernameRegisterTextField.getText(),
-                passwordRegisterField.getText(),
-                emailRegisterField.getText())) {
-            loginAlert.setAlertType(Alert.AlertType.WARNING);
-            loginAlert.setTitle("Error");
-            loginAlert.setContentText("Takie konto już istnieje");
+            alert.showAndWait();
+
+            backToClientMainMenu(actionEvent);
         } else {
-            loginAlert.setAlertType(Alert.AlertType.INFORMATION);
-            loginAlert.setTitle("Konto utworzone");
-            loginAlert.setContentText("Teraz możesz się zalogować");
+            alert.setAlertType(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setContentText("Takie konto już istnieje");
+
+            alert.showAndWait();
         }
-
-        backToClientMainMenu(actionEvent);
-
     }
 
     public void backMenu(ActionEvent actionEvent) throws IOException {
@@ -75,7 +72,7 @@ public class RegisterClientController implements Initializable {
     }
 
     private void backToClientMainMenu (ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/client/ClientMainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login_scene.fxml"));
         Scene scene = new Scene(root);
 
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();

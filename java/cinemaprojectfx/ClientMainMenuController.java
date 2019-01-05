@@ -17,7 +17,7 @@ public class ClientMainMenuController implements Initializable {
 
     @FXML
     public void onLoginClientButtonClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/client/LoginClient.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/client/login_scene.fxml"));
         Scene scene = new Scene(root);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -27,7 +27,7 @@ public class ClientMainMenuController implements Initializable {
 
     @FXML
     public void onRegisterClientButtonClick(ActionEvent event) throws IOException {
-        Parent loader = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/client/RegisterClient.fxml"));
+        Parent loader = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/client/register_scene.fxml"));
         Scene scene = new Scene(loader);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -42,7 +42,7 @@ public class ClientMainMenuController implements Initializable {
 
     @FXML
     public void onBackButtonClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/MenuCinemaProject.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/CinemaProject/main_scene.fxml"));
         Scene scene = new Scene(root);
 
 

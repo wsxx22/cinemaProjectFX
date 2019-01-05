@@ -2,15 +2,12 @@ package cinemaprojectfx.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
-import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.service.ServiceRegistry;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -37,14 +34,48 @@ public class Database {
         return instance;
     }
 
-    public boolean login(String username, String password) {
+    public Optional<User> login(String username, String password) {
+        Optional<User> optionalUser = Optional.empty();
+
         try {
             session = sessionFactory.openSession();
 
-            return Optional.ofNullable(session.createCriteria(User.class).add(Restrictions.allEq(Map.ofEntries(
+            User user = (User) session.createCriteria(User.class).add(Restrictions.allEq(Map.ofEntries(
                     Map.entry("username", username),
                     Map.entry("password", password)
-            ))).uniqueResult()).isPresent();
+            ))).uniqueResult();
+
+            optionalUser = Optional.ofNullable(user);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+        return optionalUser;
+    }
+
+    public boolean register(String username, String password, String email) {
+        try {
+            session = sessionFactory.openSession();
+
+            Optional<Object> optionalUser = Optional.ofNullable(session.createCriteria(User.class)
+                    .add(Restrictions.or(Restrictions.eq("username", username),
+                            Restrictions.eq("email", email))).uniqueResult());
+
+            if (!optionalUser.isPresent()) {
+                session.beginTransaction();
+
+                User user = new User(username, password, email);
+                session.save(user);
+
+                session.getTransaction().commit();
+                return true;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -56,29 +87,5 @@ public class Database {
         return false;
     }
 
-    public boolean registerNewClient (String username, String password, String email) {
 
-        session = sessionFactory.openSession();
-
-        if (!Optional.ofNullable(session.createCriteria(User.class).add(Restrictions.allEq(Map.ofEntries(
-                Map.entry("username", username),
-                Map.entry("email", email)
-        ))).uniqueResult()).isPresent()) {
-            session.beginTransaction();
-
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setEmail(email);
-
-            session.save(user);
-            session.getTransaction().commit();
-            session.close();
-            return true;
-        } else {
-            session.close();
-            return false;
-        }
-
-    }
 }

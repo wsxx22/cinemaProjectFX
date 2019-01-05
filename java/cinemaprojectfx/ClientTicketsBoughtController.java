@@ -15,6 +15,5 @@ public class ClientTicketsBoughtController implements Initializable {
     }
 
     public void onBackMenuClient(ActionEvent event) throws IOException {
-        ClientLoggedMenuController.backToClientLoggedMenu(event);
     }
 }

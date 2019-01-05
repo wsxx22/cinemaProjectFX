@@ -15,7 +15,7 @@ public class ClientMenuShowRepertoireController implements Initializable {
     }
 
     public void onBackMenuClient(ActionEvent event) throws IOException {
-        ClientLoggedMenuController.backToClientLoggedMenu(event);
+
     }
 
 }
