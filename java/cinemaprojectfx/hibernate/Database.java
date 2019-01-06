@@ -65,6 +65,7 @@ public class Database {
                     .add(Restrictions.or(Restrictions.eq("username", username),
                             Restrictions.eq("email", email))).uniqueResult());
 
+
             if (!optionalUser.isPresent()) {
                 session.beginTransaction();
 

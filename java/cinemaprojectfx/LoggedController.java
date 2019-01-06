@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,6 +28,16 @@ public class LoggedController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        AnchorPane pane = null;
+        try {
+            pane = FXMLLoader.load(getClass().getResource("/fxml/main_page.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        anchorPane.getChildren().clear();
+        anchorPane.getChildren().add(pane);
+
         Platform.runLater(() -> {
             userLabel.setText(user.getUsername());
         });
@@ -62,11 +73,24 @@ public class LoggedController implements Initializable {
     @FXML
     public void onSettingsButtonClick(ActionEvent event) throws IOException {
 
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
+        anchorPane.getChildren().clear();
+        anchorPane.getChildren().add(pane);
+
+
     }
 
     @FXML
     public void onLogOutButtonClick(ActionEvent event) throws IOException {
-       backToClientLoggedMenu(event);
+
+        int answer = JOptionPane.showConfirmDialog(null,"Czy napewno chcesz się wylogować?",
+                "Wyloguj", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (answer == JOptionPane.YES_OPTION) {
+            backToClientLoggedMenu(event);
+        }
+
+
     }
 
     public void backToClientLoggedMenu (ActionEvent event) throws IOException {
