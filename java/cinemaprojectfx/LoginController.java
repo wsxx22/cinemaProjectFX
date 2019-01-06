@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
             Parent root = loader.load();
 
 
-            ClientLoggedController controller = loader.getController();
+            LoggedController controller = loader.getController();
             controller.setUser(optionalUser.get());
 
             Scene scene = new Scene(root);

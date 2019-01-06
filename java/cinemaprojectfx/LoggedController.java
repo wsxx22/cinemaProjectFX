@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClientLoggedController implements Initializable {
+public class LoggedController implements Initializable {
 
     @FXML AnchorPane anchorPane;
 
@@ -28,39 +28,35 @@ public class ClientLoggedController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(() -> {
-            userLabel.setText(user.getId() + " " + user.getUsername());
+            userLabel.setText(user.getUsername());
         });
     }
 
     @FXML
     public void onMainPageButtonClick(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/main_pane.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/main_page.fxml"));
 
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(pane);
+
     }
 
     @FXML
-    public void onBuyTicketWithAccButtonClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(
-                "/fxml/ShowRepertoire.fxml"));
-        Scene scene = new Scene(root);
+    public void onRepertoireButtonClick(ActionEvent event) throws IOException {
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/show_repertoire.fxml"));
+
+        anchorPane.getChildren().clear();
+        anchorPane.getChildren().add(pane);
 
     }
 
     @FXML
     public void onShowBoughtTicketsButtonClick(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(
-                "/fxml/ClientShowTicketsBought.fxml"));
-        Scene scene = new Scene(root);
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/show_tickets_bought.fxml"));
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        anchorPane.getChildren().clear();
+        anchorPane.getChildren().add(pane);
     }
 
     @FXML

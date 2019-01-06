@@ -7,7 +7,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
