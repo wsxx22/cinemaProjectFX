@@ -21,9 +21,9 @@
       </Label>
       <Label layoutX="42.0" layoutY="127.0" prefHeight="17.0" prefWidth="78.0" text="Aktualny mail:" />
       <Label layoutX="42.0" layoutY="144.0" text="mail" />
-      <TextField layoutX="42.0" layoutY="168.0" prefHeight="25.0" prefWidth="165.0" promptText="Tutaj podaj email do zmiany" />
+      <TextField fx:id="changeEmailTextField" layoutX="42.0" layoutY="168.0" prefHeight="25.0" prefWidth="165.0" promptText="Tutaj podaj email do zmiany" />
       <Button fx:id="changeEmailButton" layoutX="42.0" layoutY="200.0" mnemonicParsing="false" onAction="#onChangeEmailButtonClick" prefHeight="25.0" prefWidth="90.0" text="Zmień email" />
-      <Button layoutX="335.0" layoutY="361.0" mnemonicParsing="false" onAction="#onDeleteAccountButtonClick" prefHeight="25.0" prefWidth="100.0" text="Usuń konto" />
+      <Button alignment="CENTER" layoutX="335.0" layoutY="361.0" mnemonicParsing="false" onAction="#onDeleteAccountButtonClick" prefHeight="25.0" prefWidth="100.0" text="Usuń konto" />
       <Label layoutX="254.0" layoutY="107.0" prefHeight="25.0" prefWidth="107.0" text="Zmiana hasła" textFill="#000000b2" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />

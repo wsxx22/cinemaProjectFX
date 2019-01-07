@@ -1,5 +1,6 @@
 package cinemaprojectfx.hibernate;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -7,6 +8,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -57,6 +60,31 @@ public class Database {
         return optionalUser;
     }
 
+    public boolean isExistEmail (String email) {
+
+
+        try {
+            session = sessionFactory.openSession();
+
+//            User user =  session.createCriteria(User.class).add(Restrictions.eq("email", email));
+
+            Criteria cr = session.createCriteria(User.class);
+            cr.add(Restrictions.eq("email", email));
+            List list = cr.list();
+
+            if (list != null) {
+                return true;
+            }
+
+        }  catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null)
+                session.close();
+        }
+        return false;
+    }
+
     public boolean register(String username, String password, String email) {
         try {
             session = sessionFactory.openSession();
@@ -86,6 +114,8 @@ public class Database {
 
         return false;
     }
+
+
 
 
 }
