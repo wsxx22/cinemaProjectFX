@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cinemaprojectfx.ShowRepertoireController">
+   <children>
+      <Label layoutX="18.0" layoutY="14.0" prefHeight="27.0" prefWidth="218.0" text="Repertuar filmów na dziś:" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="214.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="18.0" layoutY="354.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Repertuar na jutro" AnchorPane.leftAnchor="18.0" />
+      <Button layoutX="387.0" layoutY="354.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="OK" AnchorPane.rightAnchor="29.0" />
+      <Separator layoutX="18.0" layoutY="33.0" prefHeight="17.0" prefWidth="168.0" />
+      <TableView layoutX="18.0" layoutY="50.0" prefHeight="281.0" prefWidth="430.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0">
+        <columns>
+          <TableColumn prefWidth="108.0" resizable="false" text="Nazwa filmu" />
+          <TableColumn prefWidth="187.0" resizable="false" text="Opis filmu" />
+            <TableColumn prefWidth="57.0" resizable="false" text="Czas trwania" />
+            <TableColumn editable="false" prefWidth="71.0" resizable="false" text="Godzina" />
+        </columns>
+      </TableView>
+      <ScrollBar layoutX="423.0" layoutY="50.0" orientation="VERTICAL" prefHeight="281.0" prefWidth="14.0" />
+      <DatePicker editable="false" layoutX="289.0" layoutY="354.0" prefHeight="25.0" prefWidth="98.0" promptText="Data" showWeekNumbers="true">
+         <effect>
+            <Lighting bumpInput="$null" diffuseConstant="1.35" specularConstant="0.0" specularExponent="0.0" surfaceScale="10.0">
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </DatePicker>
+      <Label layoutX="208.0" layoutY="358.0" prefHeight="17.0" prefWidth="81.0" text="Wybierz date:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
