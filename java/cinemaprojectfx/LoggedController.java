@@ -74,19 +74,19 @@ public class LoggedController implements Initializable {
     public void onSettingsButtonClick(ActionEvent event) throws IOException {
 
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
+
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(pane);
-
 
     }
 
     @FXML
     public void onLogOutButtonClick(ActionEvent event) throws IOException {
 
-        int answer = JOptionPane.showConfirmDialog(null,"Czy napewno chcesz się wylogować?",
+        int logOut = JOptionPane.showConfirmDialog(null,"Czy napewno chcesz się wylogować?",
                 "Wyloguj", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        if (answer == JOptionPane.YES_OPTION) {
+        if (logOut == JOptionPane.YES_OPTION) {
             backToClientLoggedMenu(event);
         }
 
@@ -108,4 +108,5 @@ public class LoggedController implements Initializable {
     public void setUser(User user) {
         this.user = user;
     }
+
 }

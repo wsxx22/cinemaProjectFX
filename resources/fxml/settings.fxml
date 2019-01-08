@@ -20,7 +20,7 @@
          </font>
       </Label>
       <Label layoutX="42.0" layoutY="127.0" prefHeight="17.0" prefWidth="78.0" text="Aktualny mail:" />
-      <Label layoutX="42.0" layoutY="144.0" text="mail" />
+      <Label fx:id="mailLabel" layoutX="42.0" layoutY="144.0" text="mail" />
       <TextField fx:id="changeEmailTextField" layoutX="42.0" layoutY="168.0" prefHeight="25.0" prefWidth="165.0" promptText="Tutaj podaj email do zmiany" />
       <Button fx:id="changeEmailButton" layoutX="42.0" layoutY="200.0" mnemonicParsing="false" onAction="#onChangeEmailButtonClick" prefHeight="25.0" prefWidth="90.0" text="Zmień email" />
       <Button alignment="CENTER" layoutX="335.0" layoutY="361.0" mnemonicParsing="false" onAction="#onDeleteAccountButtonClick" prefHeight="25.0" prefWidth="100.0" text="Usuń konto" />
