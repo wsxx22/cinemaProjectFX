@@ -1,4 +1,4 @@
-package cinemaprojectfx.hibernate;
+package cinemaprojectfx;
 
 public class MainPageLoggedController {
 }

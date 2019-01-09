@@ -9,7 +9,7 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <!-- Database Connection Settings -->
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://77.55.192.67:3306/wsx22</property>
         <property name="hibernate.connection.username">wsx22</property>
         <property name="hibernate.connection.password">wsx22</property>
@@ -20,6 +20,12 @@
 
         <!-- Mapping With Model Class Containing Annotations -->
         <mapping class="cinemaprojectfx.hibernate.User"/>
+        <mapping class="cinemaprojectfx.hibernate.Actor"/>
+        <mapping class="cinemaprojectfx.hibernate.Director"/>
+        <mapping class="cinemaprojectfx.hibernate.Genre"/>
+        <mapping class="cinemaprojectfx.hibernate.TicketType"/>
+        <mapping class="cinemaprojectfx.hibernate.Movie"/>
+        <mapping class="cinemaprojectfx.hibernate.Room"/>
 
     </session-factory>
 </hibernate-configuration>

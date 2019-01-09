@@ -2,10 +2,10 @@ package cinemaprojectfx.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.service.ServiceRegistry;
 
 import java.util.Map;
 import java.util.Optional;
@@ -18,11 +18,17 @@ public class Database {
     private SessionFactory sessionFactory;
 
     private Database() {
-        Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
+        var serviceRegistry = new StandardServiceRegistryBuilder()
+                .configure("hibernate.cfg.xml").build();
 
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        try {
+            // klasa Metadata przechowuje konfiguracje
+            var metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();
+            sessionFactory = metadata.buildSessionFactory();
+
+        } catch (Exception e) {
+            StandardServiceRegistryBuilder.destroy(serviceRegistry);
+        }
     }
 
     public static Database getInstance() {
@@ -34,17 +40,21 @@ public class Database {
     }
 
     public Optional<User> login(String username, String password) {
-        Optional<User> optionalUser = Optional.empty();
-
         try {
             session = sessionFactory.openSession();
 
-            User user = (User) session.createCriteria(User.class).add(Restrictions.allEq(Map.ofEntries(
-                    Map.entry("username", username),
-                    Map.entry("password", password)
-            ))).uniqueResult();
+            var builder = session.getCriteriaBuilder();
+            var query = builder.createQuery(User.class);
+            var root = query.from(User.class);
 
-            optionalUser = Optional.ofNullable(user);
+            query.select(root).where(
+                    builder.and(
+                            builder.equal(root.get("username"), username),
+                            builder.equal(root.get("password"), password)
+                    )
+            );
+
+            return session.createQuery(query).uniqueResultOptional();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,8 +64,9 @@ public class Database {
             }
         }
 
-        return optionalUser;
+        return Optional.empty();
     }
+
 
     public boolean register(String username, String password, String email) {
         try {
@@ -112,7 +123,7 @@ public class Database {
         session = sessionFactory.openSession();
         session.beginTransaction();
 
-        User user = (User) session.get(User.class,4);
+        User user = session.get(User.class,4);
         user.setEmail(email);
         session.update(user);
         session.close();

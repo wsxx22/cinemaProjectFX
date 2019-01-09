@@ -15,10 +15,10 @@ import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class UserSettings implements Initializable {
+public class UserSettingsController implements Initializable {
 
     private Database database;
-    private User user;
+    private User user; // null
 
     @FXML Button changePasswordButton;
     @FXML Button changeEmailButton;
