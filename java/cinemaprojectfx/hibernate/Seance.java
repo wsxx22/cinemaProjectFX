@@ -21,5 +21,8 @@ public class Seance implements Serializable {
     @Column (name = "datetime")
     private LocalDateTime dateTime;
 
+    public Seance() {
+    }
+
 
 }

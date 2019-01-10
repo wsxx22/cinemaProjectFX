@@ -5,8 +5,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.criterion.CriteriaQuery;
 import org.hibernate.criterion.Restrictions;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
 import java.util.Map;
 import java.util.Optional;
 
@@ -67,15 +71,26 @@ public class Database {
         return Optional.empty();
     }
 
-
+    // TODO: 08.01.2019 zmienic na nowego hibernate'a
     public boolean register(String username, String password, String email) {
         try {
             session = sessionFactory.openSession();
 
-            Optional<Object> optionalUser = Optional.ofNullable(session.createCriteria(User.class)
-                    .add(Restrictions.or(Restrictions.eq("username", username),
-                            Restrictions.eq("email", email))).uniqueResult());
+            var builder = session.getCriteriaBuilder();
+            var query = builder.createQuery(User.class);
+            var root = query.from(User.class);
 
+            query.select(root).where(builder.and(
+                    builder.equal(root.get("username"), username),
+                    builder.equal(root.get("email"), email)
+                    )
+            );
+
+            Optional<User> optionalUser = session.createQuery(query).uniqueResultOptional();
+
+//            Optional<Object> optionalUser = Optional.ofNullable(session.createCriteria(User.class)
+//                    .add(Restrictions.or(Restrictions.eq("username", username),
+//                            Restrictions.eq("email", email))).uniqueResult());
 
             if (!optionalUser.isPresent()) {
                 session.beginTransaction();
@@ -103,10 +118,15 @@ public class Database {
         try {
             session = sessionFactory.openSession();
 
-            User user =  (User) session.createCriteria(User.class).add(Restrictions.eq(
-                    "email", email)).uniqueResult();
+            var builder = session.getCriteriaBuilder();
+            var query = builder.createQuery(User.class);
+            var root = query.from(User.class);
 
-            if (user != null)
+            query.select(root).where(builder.equal(root.get("email"), email));
+
+            Optional<User> optionalUser = session.createQuery(query).uniqueResultOptional();
+
+            if (optionalUser.isPresent())
                 return true;
 
         }  catch (Exception e) {
@@ -120,19 +140,6 @@ public class Database {
 
     public void changeClientEmail (String email) {
 
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        User user = session.get(User.class,4);
-        user.setEmail(email);
-        session.update(user);
-        session.close();
-
-
-//        session.save(user);
-//        session.evict(user);
-//        session.update(user);
-//        session.close();
 
     }
 
