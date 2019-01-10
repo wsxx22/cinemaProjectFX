@@ -27,6 +27,10 @@
         <mapping class="cinemaprojectfx.hibernate.Movie"/>
         <mapping class="cinemaprojectfx.hibernate.Room"/>
         <mapping class="cinemaprojectfx.hibernate.Order"/>
+        <mapping class="cinemaprojectfx.hibernate.Ticket"/>
+        <mapping class="cinemaprojectfx.hibernate.Seance"/>
+        <mapping class="cinemaprojectfx.hibernate.Employee"/>
+
 
     </session-factory>
 </hibernate-configuration>
