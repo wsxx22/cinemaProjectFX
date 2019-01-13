@@ -1,5 +1,6 @@
 package cinemaprojectfx;
 
+import cinemaprojectfx.hibernate.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +24,8 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
+        Database.getInstance().test();
+
         launch(args);
     }
 

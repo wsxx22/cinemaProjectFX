@@ -2,16 +2,12 @@ package cinemaprojectfx.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.criterion.CriteriaQuery;
-import org.hibernate.criterion.Restrictions;
 
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.Map;
 import java.util.Optional;
 
 public class Database {
@@ -31,6 +27,7 @@ public class Database {
             sessionFactory = metadata.buildSessionFactory();
 
         } catch (Exception e) {
+            e.printStackTrace();
             StandardServiceRegistryBuilder.destroy(serviceRegistry);
         }
     }
@@ -43,6 +40,35 @@ public class Database {
         return instance;
     }
 
+    public void test() {
+
+        try {
+            session = sessionFactory.openSession();
+
+            var seance = session.get(Seance.class, 2);
+            System.out.println(seance.getMovie().getId());
+            System.out.println(seance.getMovie().getTitle());
+
+            var order = session.get(Order.class, 5);
+            System.out.println(order.getId());
+            System.out.println(order.getTickets().size());
+
+            var movie = session.get(Movie.class, 39);
+            System.out.println(movie.getTitle());
+            movie.getActors().forEach(actor -> {
+                System.out.println(actor.getName());
+            });
+
+        } catch ( Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+    }
+
     public Optional<User> login(String username, String password) {
         try {
             session = sessionFactory.openSession();
@@ -50,6 +76,10 @@ public class Database {
             var builder = session.getCriteriaBuilder();
             var query = builder.createQuery(User.class);
             var root = query.from(User.class);
+
+//            CriteriaBuilder builder = session.getCriteriaBuilder();
+//            CriteriaQuery<User> query = builder.createQuery(User.class);
+//            Root<User> root = query.from(User.class);
 
             query.select(root).where(
                     builder.and(
@@ -71,7 +101,6 @@ public class Database {
         return Optional.empty();
     }
 
-    // TODO: 08.01.2019 zmienic na nowego hibernate'a
     public boolean register(String username, String password, String email) {
         try {
             session = sessionFactory.openSession();
@@ -80,9 +109,10 @@ public class Database {
             var query = builder.createQuery(User.class);
             var root = query.from(User.class);
 
-            query.select(root).where(builder.and(
-                    builder.equal(root.get("username"), username),
-                    builder.equal(root.get("email"), email)
+            query.select(root).where(
+                    builder.and(
+                        builder.equal(root.get("username"), username),
+                        builder.equal(root.get("email"), email)
                     )
             );
 

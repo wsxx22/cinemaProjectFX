@@ -72,12 +72,14 @@ public class LoggedController implements Initializable {
 
     @FXML
     public void onSettingsButtonClick(ActionEvent event) throws IOException {
+        var loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"));
+        var pane = (AnchorPane) loader.load();
 
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
+        var userSettingsController = (UserSettingsController) loader.getController();
+        userSettingsController.setUser(user);
 
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(pane);
-
     }
 
     @FXML

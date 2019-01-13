@@ -34,6 +34,7 @@ public class UserSettingsController implements Initializable {
 //            mailLabel.setText(user.getEmail());
 //        });
 
+        // java Preferences
     }
 
     @FXML

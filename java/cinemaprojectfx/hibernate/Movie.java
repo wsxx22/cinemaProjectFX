@@ -22,20 +22,21 @@ public class Movie implements Serializable {
     @Column (name = "duration", nullable = false, length = 10)
     private int duration;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "movie_actors", joinColumns = {@JoinColumn(name = "id_movie")},
             inverseJoinColumns={@JoinColumn(name = "id_actor")})
     private List<Actor> actors;
 
-    @OneToMany (cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable (name = "movie_directors", joinColumns = {@JoinColumn(name = "id_movie")},
             inverseJoinColumns = {@JoinColumn(name = "id_director")})
     private List<Director> directors;
 
-    @OneToMany (cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable (name = "movie_genres", joinColumns = {@JoinColumn(name = "id_movie")},
             inverseJoinColumns = {@JoinColumn(name = "id_genre")})
     private List<Genre> genres;
+
 
     public Movie() {
     }
@@ -72,5 +73,17 @@ public class Movie implements Serializable {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public List<Director> getDirectors() {
+        return directors;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
     }
 }
