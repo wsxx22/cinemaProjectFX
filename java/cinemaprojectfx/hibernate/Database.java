@@ -40,6 +40,25 @@ public class Database {
         return instance;
     }
 
+    public <T> void updateEntity(T t) {
+        try {
+            session = sessionFactory.openSession();
+
+            session.getTransaction().begin();
+
+            session.update(t);
+
+            session.getTransaction().commit();
+
+        } catch ( Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
     public void test() {
 
         try {
@@ -118,10 +137,6 @@ public class Database {
 
             Optional<User> optionalUser = session.createQuery(query).uniqueResultOptional();
 
-//            Optional<Object> optionalUser = Optional.ofNullable(session.createCriteria(User.class)
-//                    .add(Restrictions.or(Restrictions.eq("username", username),
-//                            Restrictions.eq("email", email))).uniqueResult());
-
             if (!optionalUser.isPresent()) {
                 session.beginTransaction();
 
@@ -162,16 +177,32 @@ public class Database {
         }  catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (session != null)
-                session.close();
+            close();
         }
         return false;
     }
 
-    public void changeClientEmail (String email) {
+    public <T> T getEntity(Class<T> type, int id) {
+
+        try {
+            session = sessionFactory.openSession();
 
 
+
+            return session.get(type, id);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return null;
     }
 
+    private void close () {
+        if (session != null)
+            session.close();
+    }
 
 }

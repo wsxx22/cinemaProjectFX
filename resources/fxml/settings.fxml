@@ -40,7 +40,7 @@
          </font>
       </Label>
       <Button fx:id="changePasswordButton" layoutX="253.0" layoutY="267.0" mnemonicParsing="false" onAction="#onChangePasswordButtonClick" prefWidth="90.0" text="Zmień hasło" />
-      <PasswordField layoutX="253.0" layoutY="168.0" promptText="Wpisz hasło" />
-      <PasswordField layoutX="253.0" layoutY="228.0" promptText="Wpisz hasło" />
+      <PasswordField fx:id="newPasswordField" layoutX="253.0" layoutY="168.0" promptText="Wpisz hasło" />
+      <PasswordField fx:id="repeatPasswordField" layoutX="253.0" layoutY="228.0" promptText="Wpisz hasło" />
    </children>
 </AnchorPane>

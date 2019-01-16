@@ -10,16 +10,21 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class LoginController implements Initializable {
 
     private Database database;
+
+    @FXML
+    AnchorPane anchorPane;
 
     @FXML TextField loginTextField;
     @FXML PasswordField passwordField;
@@ -29,6 +34,33 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         database = Database.getInstance();
+
+        var preferences = Preferences.userRoot().node(getClass().getName());
+        var userId = preferences.getInt("userId", -1);
+        if (userId != -1) {
+            var user = database.getEntity(User.class, userId);
+
+            System.out.println("powinien przejsc do zalogowanego ekranu");
+
+//            try {
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client_logged_scene.fxml"));
+//                Parent root = loader.load();
+//
+//                LoggedController controller = loader.getController();
+//                controller.setUser(user);
+//
+//                Scene scene = new Scene(root);
+//                Stage stage = (Stage) anchorPane.getScene().getWindow();
+//                stage.setScene(scene);
+//                stage.show();
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+        }
+
+
 
         loginButton.setDisable(true);
 
@@ -48,6 +80,9 @@ public class LoginController implements Initializable {
 
         Optional<User> optionalUser = database.login(loginTextField.getText(), passwordField.getText());
         if (optionalUser.isPresent()) {
+
+            var preferences = Preferences.userRoot().node(getClass().getName());
+            preferences.putInt("userId", optionalUser.get().getId());
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client_logged_scene.fxml"));
             Parent root = loader.load();

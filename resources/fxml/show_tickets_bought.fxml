@@ -14,13 +14,13 @@
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-      <TableView layoutX="4.0" layoutY="57.0" prefHeight="332.0" prefWidth="429.0">
+      <TableView fx:id="tableView" layoutX="4.0" layoutY="57.0" prefHeight="332.0" prefWidth="429.0">
         <columns>
-          <TableColumn fx:id="idTicket" prefWidth="34.0" resizable="false" text="Id" />
-          <TableColumn fx:id="dateMovie" prefWidth="76.0" resizable="false" text="Data filmu" />
-            <TableColumn fx:id="movieTitle" prefWidth="172.0" resizable="false" text="Nazwa filmu" />
-            <TableColumn fx:id="priceTicket" prefWidth="70.0" resizable="false" text="Cena biletu" />
-            <TableColumn fx:id="typeTicket" prefWidth="76.0" resizable="false" text="Typ biletu" />
+          <TableColumn fx:id="ticketIdCol" prefWidth="34.0" resizable="false" text="Id" />
+          <TableColumn fx:id="datetimeCol" prefWidth="76.0" resizable="false" text="Data filmu" />
+            <TableColumn fx:id="movieTitleCol" prefWidth="172.0" resizable="false" text="Nazwa filmu" />
+            <TableColumn fx:id="ticketPriceCol" prefWidth="70.0" resizable="false" text="Cena biletu" />
+            <TableColumn fx:id="ticketTypeCol" prefWidth="76.0" resizable="false" text="Typ biletu" />
         </columns>
       </TableView>
       <ScrollBar layoutX="432.0" layoutY="57.0" orientation="VERTICAL" prefHeight="332.0" prefWidth="14.0" />

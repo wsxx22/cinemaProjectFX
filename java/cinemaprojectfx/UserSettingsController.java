@@ -2,13 +2,12 @@ package cinemaprojectfx;
 
 import cinemaprojectfx.hibernate.Database;
 import cinemaprojectfx.hibernate.User;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import javax.swing.*;
@@ -20,15 +19,30 @@ public class UserSettingsController implements Initializable {
     private Database database;
     private User user; // null
 
-    @FXML Button changePasswordButton;
     @FXML Button changeEmailButton;
     @FXML TextField changeEmailTextField;
     @FXML Label mailLabel;
+
+
+    @FXML Button changePasswordButton;
+    @FXML PasswordField newPasswordField;
+    @FXML PasswordField repeatPasswordField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         database = Database.getInstance();
 
+        changePasswordButton.setDisable(true);
+
+        newPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            changePasswordButton.setDisable(newPasswordField.getText().isEmpty() || repeatPasswordField.getText().isEmpty() ||
+                    !newPasswordField.getText().equals(repeatPasswordField.getText()));
+        });
+
+        repeatPasswordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            changePasswordButton.setDisable(newPasswordField.getText().isEmpty() || repeatPasswordField.getText().isEmpty() ||
+                    !newPasswordField.getText().equals(repeatPasswordField.getText()));
+        });
 
 //        Platform.runLater(() -> {
 //            mailLabel.setText(user.getEmail());
@@ -45,8 +59,9 @@ public class UserSettingsController implements Initializable {
                 JOptionPane.showMessageDialog(null, "Ten email już istnieje, podaj inny",
                         "Zmiana email", JOptionPane.WARNING_MESSAGE);
             } else {
-            database.changeClientEmail(changeEmailTextField.getText());
                 user.setEmail(changeEmailTextField.getText());
+                database.updateEntity(user);
+
                 JOptionPane.showMessageDialog(null, "Email zmieniony", "Zmiana email",
                         JOptionPane.INFORMATION_MESSAGE);
             }
@@ -69,6 +84,10 @@ public class UserSettingsController implements Initializable {
 
     @FXML
     public void onChangePasswordButtonClick(ActionEvent event) {
+
+        user.setPassword(newPasswordField.getText());
+        database.updateEntity(user);
+
 
     }
 

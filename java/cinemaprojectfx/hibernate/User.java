@@ -2,6 +2,7 @@ package cinemaprojectfx.hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +21,9 @@ public class User implements Serializable {
 
     @Column(name = "email", nullable = false, length = 50)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Order> orders;
 
     public User() { }
 
@@ -55,5 +59,9 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 }

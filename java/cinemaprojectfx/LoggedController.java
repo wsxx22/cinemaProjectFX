@@ -64,7 +64,11 @@ public class LoggedController implements Initializable {
 
     @FXML
     public void onShowBoughtTicketsButtonClick(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/show_tickets_bought.fxml"));
+        var loader = new FXMLLoader(getClass().getResource("/fxml/show_tickets_bought.fxml"));
+        var pane = (AnchorPane) loader.load();
+
+        var ticketsBoughtController = (TicketsBoughtController) loader.getController();
+        ticketsBoughtController.setUser(user);
 
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(pane);
