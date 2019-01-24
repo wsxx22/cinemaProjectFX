@@ -9,8 +9,5 @@
         <module name="projectjavafx" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="projectjavafx" target="10" />
-    </bytecodeTargetLevel>
   </component>
 </project>
