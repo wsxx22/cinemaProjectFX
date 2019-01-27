@@ -1,18 +1,20 @@
 package cinemaprojectfx.hibernate;
 
+
 import java.time.LocalDateTime;
 
 public class ModelTableList {
 
     private int ticketId;
-    private LocalDateTime localDateTime;
+    private String dateTime;
     private String movieTitle;
     private int ticketPrice;
     private String ticketType;
 
-    public ModelTableList(int ticketId, LocalDateTime localDateTime, String movieTitle, int ticketPrice, String ticketType) {
+
+    public ModelTableList(int ticketId, String dateTime, String movieTitle, int ticketPrice, String ticketType) {
         this.ticketId = ticketId;
-        this.localDateTime = localDateTime;
+        this.dateTime = dateTime;
         this.movieTitle = movieTitle;
         this.ticketPrice = ticketPrice;
         this.ticketType = ticketType;
@@ -26,12 +28,12 @@ public class ModelTableList {
         this.ticketId = ticketId;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public String getDateTime() {
+        return dateTime;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getMovieTitle() {
@@ -57,4 +59,6 @@ public class ModelTableList {
     public void setTicketType(String ticketType) {
         this.ticketType = ticketType;
     }
+
+
 }

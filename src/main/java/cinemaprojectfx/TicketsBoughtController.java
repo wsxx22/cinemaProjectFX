@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -54,10 +56,16 @@ public class TicketsBoughtController implements Initializable {
     public void ticketBought() {
         List<Ticket> tickets = database.getTickets();
         try {
+            int i = 0;
             for (Ticket t : tickets) {
                 if (user.getId() == t.getOrder().getUser().getId()) {
-                oblist.add(new ModelTableList(t.getId(), t.getOrder().getDateTime(), t.getOrder().getSeance().getMovie().getTitle(),
-                        t.getTicketType().getPrice(), t.getTicketType().getTicketType()));
+
+                oblist.add(new ModelTableList(
+                        i=i+1,
+                        t.getOrder().getDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy")),
+                        t.getOrder().getSeance().getMovie().getTitle(),
+                        t.getTicketType().getPrice(),
+                        t.getTicketType().getTicketType()));
             }
             }
         } catch (Exception e) {
@@ -65,7 +73,7 @@ public class TicketsBoughtController implements Initializable {
         }
 
         ticketIdCol.setCellValueFactory(new PropertyValueFactory<>("ticketId"));
-        datetimeCol.setCellValueFactory(new PropertyValueFactory<>("localDateTime"));
+        datetimeCol.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         movieTitleCol.setCellValueFactory(new PropertyValueFactory<>("movieTitle"));
         ticketPriceCol.setCellValueFactory(new PropertyValueFactory<>("ticketPrice"));
         ticketTypeCol.setCellValueFactory(new PropertyValueFactory<>("ticketType"));

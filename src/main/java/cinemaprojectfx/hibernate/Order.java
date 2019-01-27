@@ -3,8 +3,11 @@ package cinemaprojectfx.hibernate;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 @Entity
 @Table (name = "orders")
@@ -67,4 +70,5 @@ public class Order implements Serializable {
     public List<Ticket> getTickets() {
         return tickets;
     }
+
 }
