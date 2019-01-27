@@ -35,12 +35,12 @@ public class LoginController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         database = Database.getInstance();
 
-        var preferences = Preferences.userRoot().node(getClass().getName());
-        var userId = preferences.getInt("userId", -1);
-        if (userId != -1) {
-            var user = database.getEntity(User.class, userId);
+//        var preferences = Preferences.userRoot().node(getClass().getName());
+//        var userId = preferences.getInt("userId", -1);
+//        if (userId != -1) {
+//            var user = database.getEntity(User.class, userId);
 
-            System.out.println("powinien przejsc do zalogowanego ekranu");
+//            System.out.println("powinien przejsc do zalogowanego ekranu");
 
 //            try {
 //                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client_logged_scene.fxml"));
@@ -58,7 +58,7 @@ public class LoginController implements Initializable {
 //                e.printStackTrace();
 //            }
 
-        }
+//        }
 
 
 

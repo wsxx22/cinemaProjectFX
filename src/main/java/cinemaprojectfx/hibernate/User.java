@@ -25,12 +25,16 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Order> orders;
 
+
+
     public User() { }
 
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
+
+
     }
 
     public int getId() {
@@ -64,4 +68,5 @@ public class User implements Serializable {
     public List<Order> getOrders() {
         return orders;
     }
+
 }

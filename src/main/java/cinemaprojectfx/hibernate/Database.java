@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import java.util.List;
 import java.util.Optional;
 
 public class Database {
@@ -57,34 +59,34 @@ public class Database {
         }
     }
 
-    public void test() {
-
-        try {
-            session = sessionFactory.openSession();
-
-            var seance = session.get(Seance.class, 2);
-            System.out.println(seance.getMovie().getId());
-            System.out.println(seance.getMovie().getTitle());
-
-            var order = session.get(Order.class, 5);
-            System.out.println(order.getId());
-            System.out.println(order.getTickets().size());
-
-            var movie = session.get(Movie.class, 39);
-            System.out.println(movie.getTitle());
-            movie.getActors().forEach(actor -> {
-                System.out.println(actor.getName());
-            });
-
-        } catch ( Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-
-    }
+//    public void test() {
+//
+//        try {
+//            session = sessionFactory.openSession();
+//
+//            var seance = session.get(Seance.class, 2);
+//            System.out.println(seance.getMovie().getId());
+//            System.out.println(seance.getMovie().getTitle());
+//
+//            var order = session.get(Order.class, 5);
+//            System.out.println(order.getId());
+//            System.out.println(order.getTickets().size());
+//
+//            var movie = session.get(Movie.class, 39);
+//            System.out.println(movie.getTitle());
+//            movie.getActors().forEach(actor -> {
+//                System.out.println(actor.getName());
+//            });
+//
+//        } catch ( Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (session != null) {
+//                session.close();
+//            }
+//        }
+//
+//    }
 
     public Optional<User> login(String username, String password) {
         try {
@@ -156,6 +158,23 @@ public class Database {
         return false;
     }
 
+    public List<Ticket> getTickets () {
+
+        try {
+            session = sessionFactory.openSession();
+            var builder = session.getCriteriaBuilder();
+            var query = builder.createQuery(Ticket.class);
+            var root = query.from(Ticket.class);
+
+            query.select(root);
+
+            return session.createQuery(query).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean isExistEmail (String email) {
 
         try {
@@ -180,23 +199,23 @@ public class Database {
         return false;
     }
 
-    public <T> T getEntity(Class<T> type, int id) {
-
-        try {
-            session = sessionFactory.openSession();
-
-
-
-            return session.get(type, id);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            close();
-        }
-
-        return null;
-    }
+//    public <T> T getEntity(Class<T> type, int id) {
+//
+//        try {
+//            session = sessionFactory.openSession();
+//
+//
+//
+//            return session.get(type, id);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            close();
+//        }
+//
+//        return null;
+//    }
 
     private void close () {
         if (session != null)
