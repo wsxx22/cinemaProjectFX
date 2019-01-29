@@ -102,7 +102,6 @@ public class ShowRepertoireController implements Initializable {
     public void onSelectMovieClick(MouseEvent mouseEvent) {
 
 
-
     }
 
     public void onOrderTicketClick(ActionEvent event) {
