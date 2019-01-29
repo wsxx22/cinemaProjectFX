@@ -1,14 +1,13 @@
 package cinemaprojectfx;
 
 import cinemaprojectfx.hibernate.*;
+import cinemaprojectfx.model.ShowTicketsTableList;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,19 +21,17 @@ import java.util.ResourceBundle;
 
 public class TicketsBoughtController implements Initializable {
 
+    @FXML TableView<ShowTicketsTableList> tableView;
+    @FXML TableColumn<ShowTicketsTableList, Integer> ticketIdCol;
+    @FXML TableColumn<ShowTicketsTableList, LocalDateTime> datetimeCol;
+    @FXML TableColumn<ShowTicketsTableList, String> movieTitleCol;
+    @FXML TableColumn<ShowTicketsTableList, Integer> ticketPriceCol;
+    @FXML TableColumn<ShowTicketsTableList, String> ticketTypeCol;
+
+    private ObservableList<ShowTicketsTableList> oblist = FXCollections.observableArrayList();
+
     private Database database;
     private User user;
-
-    @FXML TableView<ModelTableList> tableView;
-    @FXML TableColumn<ModelTableList, Integer> ticketIdCol;
-    @FXML TableColumn<ModelTableList, LocalDateTime> datetimeCol;
-    @FXML TableColumn<ModelTableList, String> movieTitleCol;
-    @FXML TableColumn<ModelTableList, Integer> ticketPriceCol;
-    @FXML TableColumn<ModelTableList, String> ticketTypeCol;
-
-    private ObservableList<ModelTableList> oblist = FXCollections.observableArrayList();
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,13 +51,14 @@ public class TicketsBoughtController implements Initializable {
     }
 
     public void ticketBought() {
+
         List<Ticket> tickets = database.getTickets();
         try {
             int i = 0;
             for (Ticket t : tickets) {
                 if (user.getId() == t.getOrder().getUser().getId()) {
 
-                oblist.add(new ModelTableList(
+                oblist.add(new ShowTicketsTableList(
                         i=i+1,
                         t.getOrder().getDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy")),
                         t.getOrder().getSeance().getMovie().getTitle(),
@@ -81,10 +79,6 @@ public class TicketsBoughtController implements Initializable {
         tableView.setItems(oblist);
 
     }
-
-
-//    public void setUser(User user) {
-//        this.user = user;
 
 //        tickets.add(new TicketBought(1, LocalDateTime.now(), "Szklana pulapka", 15, "NORMALNY"));
 
@@ -152,7 +146,4 @@ public class TicketsBoughtController implements Initializable {
 //        }
 //    }
 
-//    public void setUser (User user) {
-//        this.user = user;
-//    }
 }

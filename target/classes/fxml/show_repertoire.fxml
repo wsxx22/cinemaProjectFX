@@ -17,21 +17,20 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="18.0" layoutY="354.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Repertuar na jutro" AnchorPane.leftAnchor="18.0" />
-      <Button layoutX="387.0" layoutY="354.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="OK" AnchorPane.rightAnchor="29.0" />
+      <Button fx:id="repertoireOnTommorowButton" layoutX="18.0" layoutY="354.0" mnemonicParsing="false" onAction="#onRepertoireOnTommorowClick" prefHeight="25.0" prefWidth="113.0" text="Repertuar na jutro" AnchorPane.leftAnchor="18.0" />
       <Separator layoutX="18.0" layoutY="33.0" prefHeight="17.0" prefWidth="168.0" />
-      <TableView layoutX="18.0" layoutY="50.0" prefHeight="281.0" prefWidth="430.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0">
+      <TableView fx:id="repertoireTable" layoutX="18.0" layoutY="50.0" onMousePressed="#onOrderTicketClickMouse" prefHeight="281.0" prefWidth="430.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0">
         <columns>
-          <TableColumn prefWidth="108.0" resizable="false" text="Nazwa filmu" />
-          <TableColumn prefWidth="187.0" resizable="false" text="Opis filmu" />
-            <TableColumn prefWidth="57.0" resizable="false" text="Czas trwania" />
-            <TableColumn editable="false" prefWidth="71.0" resizable="false" text="Godzina" />
+          <TableColumn fx:id="movieTitleCol" prefWidth="108.0" resizable="false" text="Nazwa filmu" />
+          <TableColumn fx:id="movieDescriptionCol" prefWidth="122.0" resizable="false" text="Opis filmu" />
+            <TableColumn fx:id="movieDurationCol" prefWidth="74.0" resizable="false" text="Czas trwania" />
+            <TableColumn fx:id="movieDateTimeCol" editable="false" prefWidth="119.0" resizable="false" text="Godzina" />
         </columns>
       </TableView>
       <ScrollBar layoutX="423.0" layoutY="50.0" orientation="VERTICAL" prefHeight="281.0" prefWidth="14.0" />
-      <DatePicker editable="false" layoutX="289.0" layoutY="354.0" prefHeight="25.0" prefWidth="98.0" promptText="Data" showWeekNumbers="true">
+      <DatePicker fx:id="repertoireDate" editable="false" layoutX="323.0" layoutY="354.0" onAction="#onRepertoireDateOnClick" prefHeight="25.0" prefWidth="113.0" promptText="Data" showWeekNumbers="true">
       </DatePicker>
-      <Label layoutX="208.0" layoutY="358.0" prefHeight="17.0" prefWidth="81.0" text="Wybierz date:">
+      <Label layoutX="242.0" layoutY="358.0" prefHeight="17.0" prefWidth="81.0" text="Wybierz date:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

@@ -1,11 +1,16 @@
 package cinemaprojectfx.hibernate;
 
+import javafx.util.Builder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
@@ -175,6 +180,23 @@ public class Database {
         return null;
     }
 
+    public List<Seance> getReportoire () {
+
+        try {
+            session = sessionFactory.openSession();
+            var builder = session.getCriteriaBuilder();
+            var query = builder.createQuery(Seance.class);
+            var root = query.from(Seance.class);
+
+            query.select(root);
+
+            return session.createQuery(query).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean isExistEmail (String email) {
 
         try {
@@ -199,23 +221,23 @@ public class Database {
         return false;
     }
 
-//    public <T> T getEntity(Class<T> type, int id) {
-//
-//        try {
-//            session = sessionFactory.openSession();
-//
-//
-//
-//            return session.get(type, id);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            close();
-//        }
-//
-//        return null;
-//    }
+    public <T> T getEntity(Class<T> type, int id) {
+
+        try {
+            session = sessionFactory.openSession();
+
+
+
+            return session.get(type, id);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return null;
+    }
 
     private void close () {
         if (session != null)

@@ -1,9 +1,6 @@
-package cinemaprojectfx.hibernate;
+package cinemaprojectfx.model;
 
-
-import java.time.LocalDateTime;
-
-public class ModelTableList {
+public class ShowTicketsTableList {
 
     private int ticketId;
     private String dateTime;
@@ -12,7 +9,7 @@ public class ModelTableList {
     private String ticketType;
 
 
-    public ModelTableList(int ticketId, String dateTime, String movieTitle, int ticketPrice, String ticketType) {
+    public ShowTicketsTableList(int ticketId, String dateTime, String movieTitle, int ticketPrice, String ticketType) {
         this.ticketId = ticketId;
         this.dateTime = dateTime;
         this.movieTitle = movieTitle;

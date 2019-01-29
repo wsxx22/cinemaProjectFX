@@ -55,7 +55,13 @@ public class LoggedController implements Initializable {
     @FXML
     public void onRepertoireButtonClick(ActionEvent event) throws IOException {
 
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/show_repertoire.fxml"));
+//        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/show_repertoire.fxml"));
+
+        var loader = new FXMLLoader(getClass().getResource("/fxml/show_repertoire.fxml"));
+        var pane = (AnchorPane)loader.load();
+
+        var showRepertoireController = (ShowRepertoireController)loader.getController();
+        showRepertoireController.setUser(user);
 
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(pane);
