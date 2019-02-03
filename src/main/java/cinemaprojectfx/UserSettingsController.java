@@ -1,7 +1,9 @@
 package cinemaprojectfx;
 
 import cinemaprojectfx.hibernate.Database;
+import cinemaprojectfx.hibernate.Room;
 import cinemaprojectfx.hibernate.User;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +14,7 @@ import javafx.scene.control.TextField;
 
 import javax.swing.*;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserSettingsController implements Initializable {
@@ -45,7 +48,8 @@ public class UserSettingsController implements Initializable {
         });
 
 //        Platform.runLater(() -> {
-//            mailLabel.setText(user.getEmail());
+//
+//
 //        });
 
         // java Preferences

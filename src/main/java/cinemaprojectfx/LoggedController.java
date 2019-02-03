@@ -40,6 +40,8 @@ public class LoggedController implements Initializable {
 
         Platform.runLater(() -> {
             userLabel.setText(user.getUsername());
+
+
         });
     }
 
@@ -60,11 +62,11 @@ public class LoggedController implements Initializable {
         var loader = new FXMLLoader(getClass().getResource("/fxml/show_repertoire.fxml"));
         var pane = (AnchorPane)loader.load();
 
-        var showRepertoireController = (ShowRepertoireController)loader.getController();
-        showRepertoireController.setUser(user);
-
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(pane);
+
+        var showRepertoireController = (ShowRepertoireController)loader.getController();
+        showRepertoireController.setPane(anchorPane);
 
     }
 
@@ -116,6 +118,13 @@ public class LoggedController implements Initializable {
         stage.show();
     }
 
+    public AnchorPane getAnchorPane() {
+        return anchorPane;
+    }
+
+    public void setAnchorPane(AnchorPane anchorPane) {
+        this.anchorPane = anchorPane;
+    }
 
     public void setUser(User user) {
         this.user = user;

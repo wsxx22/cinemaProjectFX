@@ -22,13 +22,17 @@ public class Room implements Serializable {
     @Column (name = "rows", nullable = false, length = 11)
     private int rows;
 
+    @Column (name = "columns")
+    private int columns;
+
     public Room() {
     }
 
-    public Room(String name, int seats, int rows) {
+    public Room(String name, int seats, int rows, int columns) {
         this.name = name;
         this.seats = seats;
         this.rows = rows;
+        this.columns = columns;
     }
 
     public int getId() {
@@ -57,5 +61,13 @@ public class Room implements Serializable {
 
     public void setRows(int rows) {
         this.rows = rows;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
     }
 }

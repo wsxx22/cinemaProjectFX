@@ -1,6 +1,5 @@
 package cinemaprojectfx.hibernate;
 
-import javafx.util.Builder;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -63,35 +62,6 @@ public class Database {
             }
         }
     }
-
-//    public void test() {
-//
-//        try {
-//            session = sessionFactory.openSession();
-//
-//            var seance = session.get(Seance.class, 2);
-//            System.out.println(seance.getMovie().getId());
-//            System.out.println(seance.getMovie().getTitle());
-//
-//            var order = session.get(Order.class, 5);
-//            System.out.println(order.getId());
-//            System.out.println(order.getTickets().size());
-//
-//            var movie = session.get(Movie.class, 39);
-//            System.out.println(movie.getTitle());
-//            movie.getActors().forEach(actor -> {
-//                System.out.println(actor.getName());
-//            });
-//
-//        } catch ( Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (session != null) {
-//                session.close();
-//            }
-//        }
-//
-//    }
 
     public Optional<User> login(String username, String password) {
         try {
@@ -239,9 +209,57 @@ public class Database {
         return null;
     }
 
+    public List<TicketType> getTicketTypes () {
+
+        try {
+            session = sessionFactory.openSession();
+
+            var builder = session.getCriteriaBuilder();
+            var query = builder.createQuery(TicketType.class);
+            var root = query.from(TicketType.class);
+
+            query.select(root);
+
+            return session.createQuery(query).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private void close () {
         if (session != null)
             session.close();
     }
+
+    public Optional<Room> getRoom (int id) {
+
+        try {
+            session = sessionFactory.openSession();
+
+            var builder = session.getCriteriaBuilder();
+            CriteriaQuery <Room> query = builder.createQuery(Room.class);
+            Root<Room> root = query.from(Room.class);
+
+            query.select(root).where(
+                    builder.equal(root.get("id"), id)
+            );
+
+            return session.createQuery(query).uniqueResultOptional();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+
+
+
+
+
+
+
+
+
 
 }

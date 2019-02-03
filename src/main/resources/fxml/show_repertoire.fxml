@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cinemaprojectfx.ShowRepertoireController">
+<AnchorPane fx:id="anchorpaneShowTickets" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cinemaprojectfx.ShowRepertoireController">
    <children>
       <Label layoutX="18.0" layoutY="14.0" prefHeight="27.0" prefWidth="218.0" text="Repertuar filmów na dziś:" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="214.0" AnchorPane.topAnchor="14.0">
          <font>
