@@ -45,6 +45,8 @@ public class ShowRepertoireController implements Initializable {
     private Database database;
     @FXML AnchorPane anchorpaneShowTickets;
 
+    private int idSeance = 0;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         database = Database.getInstance();
@@ -105,23 +107,17 @@ public class ShowRepertoireController implements Initializable {
         showRepertoire(dateTime);
     }
 
-    public ShowRepertoireTableList onSelectMovieClick(MouseEvent mouseEvent) {
+    public void onSelectMovieClick(MouseEvent mouseEvent) {
         TableRow<ShowRepertoireTableList> tableRow = new TableRow<>();
-        if (mouseEvent.getClickCount() == 2 && !tableRow.isEmpty()) {
+        if (mouseEvent.getClickCount() == 2 ) {
 
-//            System.out.println(tableRow.getItem().getMovieTitle() + " " + tableRow.getItem().getDateTime());
-            return tableRow.getItem();
+            int id = tableRow.getItem().getId();
+            System.out.println("id " + id);
         }
+//        if (mouseEvent.getClickCount() ==2) {
+//            System.out.println("asd");
+//        }
 
-//        TableRow<ShowRepertoireTableList> tableRow = new TableRow<>();
-//        tableRow.setOnMouseClicked( event -> {
-//            if (mouseEvent.getClickCount() == 2 && !tableRow.isEmpty()) {
-//                ShowRepertoireTableList rowData = tableRow.getItem();
-//                System.out.println(rowData.getMovieTitle() + " " + rowData.getDateTime());
-//            }
-//        });
-
-        return null;
     }
 
     public void onOrderTicketClick(ActionEvent event) {
@@ -140,10 +136,6 @@ public class ShowRepertoireController implements Initializable {
 
                 anchorPane.getChildren().clear();
                 anchorPane.getChildren().add(pane);
-
-//                AnchorPane clearAnchorPane = new AnchorPane();
-//                loggedController.setAnchorPane(clearAnchorPane);
-//                loggedController.getAnchorPane().getChildren().add(pane);
 
             } catch (IOException e) {
                 e.printStackTrace();

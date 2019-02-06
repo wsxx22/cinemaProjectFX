@@ -26,6 +26,8 @@ public class MainApp extends Application {
     public static void main(String[] args) {
 //        Database.getInstance();
 
+        Database.getInstance().getTakenSeatsForSeance(4);
+
         launch(args);
     }
 

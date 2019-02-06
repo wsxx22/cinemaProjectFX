@@ -1,5 +1,6 @@
 package cinemaprojectfx.hibernate;
 
+import javafx.util.Pair;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -10,6 +11,8 @@ import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -252,7 +255,34 @@ public class Database {
         return Optional.empty();
     }
 
+    public List<Pair<Integer, Integer>> getTakenSeatsForSeance(int seanceId) {
 
+        session = sessionFactory.openSession();
+
+//        var hql = "SELECT T.id, id_ticket, id_ticket_type, row, seat " +
+//                "FROM Seance S, Order O, Ticket T " +
+//                "WHERE S.id = O.seance.id AND O.id = T.order.id AND S.id = :id";
+//
+//        var query = session.createQuery(hql);
+
+
+        var sql = "SELECT row, seat " +
+                "FROM seances s, orders o, tickets t " +
+                "WHERE s.id_seance = o.id_seance AND o.id_order = t.id_order AND s.id_seance = :id";
+
+        var query = session.createSQLQuery(sql);
+        query.setParameter("id", seanceId);
+
+        List<Pair<Integer, Integer>> seats = new ArrayList<>();
+
+        Iterator iterator = query.list().iterator();
+        while (iterator.hasNext()) {
+            Object[] row = (Object[]) iterator.next();
+            seats.add(new Pair<>((Integer) row[0], (Integer) row[1]));
+        }
+
+        return seats;
+    }
 
 
 
