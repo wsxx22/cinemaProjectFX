@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -60,9 +61,24 @@ public class Database {
         } catch ( Exception e) {
             e.printStackTrace();
         } finally {
-            if (session != null) {
-                session.close();
-            }
+            close();
+        }
+    }
+
+    public <T> void saveEntity(T t) {
+        try {
+            session = sessionFactory.openSession();
+
+            session.getTransaction().begin();
+
+            session.saveOrUpdate(t);
+
+            session.getTransaction().commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
         }
     }
 
@@ -90,9 +106,7 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (session != null) {
-                session.close();
-            }
+            close();
         }
 
         return Optional.empty();
@@ -121,6 +135,7 @@ public class Database {
                 User user = new User(username, password, email);
                 session.save(user);
 
+
                 session.getTransaction().commit();
                 return true;
             }
@@ -128,9 +143,7 @@ public class Database {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (session != null) {
-                session.close();
-            }
+            close();
         }
 
         return false;
@@ -149,7 +162,10 @@ public class Database {
             return session.createQuery(query).list();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            close();
         }
+
         return null;
     }
 
@@ -166,7 +182,10 @@ public class Database {
             return session.createQuery(query).list();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            close();
         }
+
         return null;
     }
 
@@ -199,8 +218,6 @@ public class Database {
         try {
             session = sessionFactory.openSession();
 
-
-
             return session.get(type, id);
 
         } catch (Exception e) {
@@ -226,9 +243,36 @@ public class Database {
             return session.createQuery(query).list();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            close();
         }
+
         return null;
     }
+
+    public int getPriceTicket (String ticketType) {
+
+        try {
+            session = sessionFactory.openSession();
+
+            var builder = session.getCriteriaBuilder();
+            var query = builder.createQuery(TicketType.class);
+            var root = query.from(TicketType.class);
+
+            query.select(root).where(builder.equal(
+                    root.get("ticketType"),ticketType
+            ));
+
+            return session.createQuery(query).uniqueResult().getPrice();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+        return 0;
+    }
+
 
     private void close () {
         if (session != null)
@@ -251,7 +295,10 @@ public class Database {
             return session.createQuery(query).uniqueResultOptional();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            close();
         }
+
         return Optional.empty();
     }
 
@@ -281,15 +328,33 @@ public class Database {
             seats.add(new Pair<>((Integer) row[0], (Integer) row[1]));
         }
 
+        close();
+
         return seats;
     }
 
+    public Optional<Seance> getSeance (int seanceId) {
+        try {
 
+            session = sessionFactory.openSession();
 
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Seance> query = builder.createQuery(Seance.class);
+            Root<Seance> root = query.from(Seance.class);
 
+            query.select(root).where(builder.equal(
+                    root.get("id"), seanceId
+            ));
 
+            return session.createQuery(query).uniqueResultOptional();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
 
-
+        return Optional.empty();
+    }
 
 }

@@ -25,7 +25,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ShowRepertoireController implements Initializable {
 
@@ -50,6 +52,8 @@ public class ShowRepertoireController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         database = Database.getInstance();
+
+        orderTicketButton.setDisable(true);
 
         Platform.runLater(() -> {
             showRepertoireToday();
@@ -98,27 +102,49 @@ public class ShowRepertoireController implements Initializable {
         repertoireTable.getItems().clear();
         LocalDateTime dateTime = LocalDateTime.now().plusDays(1);
         showRepertoire(dateTime);
+        orderTicketButton.setDisable(true);
     }
 
     public void onRepertoireDateOnClick(ActionEvent event) {
 
         LocalDateTime dateTime = LocalDateTime.of(repertoireDate.getValue(), LocalTime.now());
-        repertoireTable.getItems().clear();
-        showRepertoire(dateTime);
+        if (dateTime.isAfter(LocalDateTime.now()) || dateTime.isEqual(LocalDateTime.now())){
+            repertoireTable.getItems().clear();
+            showRepertoire(dateTime);
+        }
+        orderTicketButton.setDisable(true);
     }
 
     public void onSelectMovieClick(MouseEvent mouseEvent) {
-        TableRow<ShowRepertoireTableList> tableRow = new TableRow<>();
         if (mouseEvent.getClickCount() == 2 ) {
+            if (!repertoireTable.getSelectionModel().isEmpty()) {
+//            if (!repertoireTable.getItems().isEmpty()){
+                idSeance = repertoireTable.getSelectionModel().getSelectedItem().getId();
+                System.out.println("id " + idSeance );
+            } else {
+                idSeance = 0;
+                System.out.println("id" + idSeance);
+            }
 
-            int id = tableRow.getItem().getId();
-            System.out.println("id " + id);
         }
-//        if (mouseEvent.getClickCount() ==2) {
-//            System.out.println("asd");
-//        }
-
+        if (idSeance == 0)
+            orderTicketButton.setDisable(true);
+        else if (mouseEvent.getClickCount() == 1)
+            orderTicketButton.setDisable(true);
+        else
+            orderTicketButton.setDisable(false);
     }
+
+    private int sum() {
+
+        int sum =0;
+        for (int i=0; i<999; i++) {
+            int j = ThreadLocalRandom.current().nextInt(4,10);
+            sum =+ j;
+        }
+        return sum;
+    }
+
 
     public void onOrderTicketClick(ActionEvent event) {
 
@@ -133,6 +159,9 @@ public class ShowRepertoireController implements Initializable {
             try {
                 var loader = new FXMLLoader(getClass().getResource("/fxml/cinema_room.fxml"));
                 var pane = (AnchorPane) loader.load();
+
+                CinemaRoomController cinemaRoomController = loader.getController();
+                cinemaRoomController.setIdSeance(repertoireTable.getSelectionModel().getSelectedItem().getId());
 
                 anchorPane.getChildren().clear();
                 anchorPane.getChildren().add(pane);

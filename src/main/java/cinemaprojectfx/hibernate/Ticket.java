@@ -55,4 +55,8 @@ public class Ticket implements Serializable {
     public int getSeat() {
         return seat;
     }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
+    }
 }

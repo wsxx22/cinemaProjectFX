@@ -1,21 +1,24 @@
 package cinemaprojectfx;
 
-import cinemaprojectfx.hibernate.Database;
-import cinemaprojectfx.hibernate.Room;
+import cinemaprojectfx.hibernate.*;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -26,8 +29,11 @@ public class CinemaRoomController implements Initializable {
     @FXML GridPane columnIdGridPane;
     @FXML GridPane seatsGridPane;
     @FXML AnchorPane anchorPaneCinemaRoom;
+    @FXML Button selectTypeTicketButton;
 
     private Database database;
+
+    private int idSeance;
 
     private final Background seatTaken
             = new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY));
@@ -38,17 +44,43 @@ public class CinemaRoomController implements Initializable {
     private final Background seatUnchecked
             = new Background(new BackgroundFill(null, CornerRadii.EMPTY, Insets.EMPTY));
 
-    private List<Pair<Integer, Integer>> seats;
-    private List<Pair<Integer, Integer>> seatsTaken = Database.getInstance().getTakenSeatsForSeance(4);
+    private ObservableList<Pair<Integer, Integer>> seats;
+    private List<Pair<Integer, Integer>> seatsTaken;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         database = Database.getInstance();
+        Platform.runLater(() -> {
+            seatsTaken = Database.getInstance().getTakenSeatsForSeance(idSeance);
 
-        showNameSeats(1);
-        showSeats(1);
+//            var seance = database.getEntity(Seance.class, idSeance);
+            var seance = database.getSeance(idSeance);
+            if (seance.isPresent()) {
+                var roomId = seance.get().getRoom().getId();
 
-        seats = new ArrayList<>();
+                showNameSeats(roomId);
+                showSeats(roomId);
+            }
+//            var roomId = seance.getRoom().getId();
+
+
+        });
+
+        selectTypeTicketButton.setDisable(true);
+
+        seats = FXCollections.observableArrayList();
+        seats.addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                if (seats.isEmpty()) {
+
+                    selectTypeTicketButton.setDisable(true);
+
+                } else {
+                    selectTypeTicketButton.setDisable(false);
+                }
+            }
+        });
     }
 
     private void showNameSeats (int idRoom) {
@@ -116,19 +148,35 @@ public class CinemaRoomController implements Initializable {
                     seats.removeIf(pair -> (pair.getKey() == column + 1) && (pair.getValue() == row + 1));
                 }
             });
+
         }
 
         seatsGridPane.add(pane, column, row);
+
     }
 
-    public void onOrderTicketClick(ActionEvent event) throws IOException {
+    public void onSelectTypeTicketClick(ActionEvent event) throws IOException{
 
         var loader = new FXMLLoader(getClass().getResource("/fxml/show_ticket_type.fxml"));
-        AnchorPane anchorPane = (AnchorPane) loader.load();
+        var anchorPane = (AnchorPane) loader.load();
+
+        var order = new Order();
+        order.setSeance(Database.getInstance().getSeance(idSeance).get());
+
+        seats.forEach(pair -> {
+            order.getTickets().add(new Ticket(order, null, pair.getKey(), pair.getValue()));
+        });
+
+        TicketTypeController ticketTypeController = loader.getController();
+        ticketTypeController.setOrder(order);
 
         anchorPaneCinemaRoom.getChildren().clear();
         anchorPaneCinemaRoom.getChildren().add(anchorPane);
-
     }
 
+    public void setIdSeance(int idSeance) {
+        this.idSeance = idSeance;
+
+        System.out.println(idSeance);
+    }
 }
